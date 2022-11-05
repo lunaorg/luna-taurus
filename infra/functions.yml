@@ -1,5 +1,13 @@
 link-consumer:
-  handler: ../src/api/link-consumer/handler
+  handler: src/api/link-consumer/bin/handler
+  events:
+    - http:
+      path: /link-consumer
+      method: GET
 
 save-images:
-  handler: ../src/api/save-images/handler
+  handler: src/api/save-images/bin/handler
+  events:
+    - http:
+      path: /save-images
+      method: POST
