@@ -22,7 +22,7 @@ func (r *Responses) Success(extraFields map[string]interface{}) (events.APIGatew
 	r.extraFields = extraFields
 
 	return events.APIGatewayProxyResponse{
-		Body:       fmt.Sprintf("%v", r),
+		Body:       fmt.Sprintf("%#v", r),
 		StatusCode: http.StatusOK,
 	}, nil
 }
