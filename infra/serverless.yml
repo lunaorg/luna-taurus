@@ -1,0 +1,14 @@
+service: luna-taurus
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: go1.x
+  region: sa-east-1
+  timeout: 30
+  memorySize: 128
+  logRetentionIndays: 14
+  # TODO vpc:
+
+resources: ${file(./resources.yml)}
+functions: ${file(./functions.yml)}

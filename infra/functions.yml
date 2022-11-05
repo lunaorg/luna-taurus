@@ -1,0 +1,5 @@
+link-consumer:
+  handler: ../src/api/link-consumer/handler
+
+save-images:
+  handler: ../src/api/save-images/handler

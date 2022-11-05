@@ -1,0 +1,19 @@
+Resources:
+  imagesUrlTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: luna-taurus-images-url
+      KeySchema:
+        - AttributeName: uuid
+          KeyType: HASH
+      AttributeDefinitions:
+        - AttributeName: uuid
+          AttributeType: S
+      ProvisionedThroughput:
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1
+  
+  imagesS3:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: luna-taurus-images

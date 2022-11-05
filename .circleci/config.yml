@@ -1,0 +1,67 @@
+version: 2.1
+
+orbs:
+  serverless: circleci/serverless-framework@2.0.0
+  aws-cli: circleci/aws-cli@3.1.1
+  go: circleci/go@1.7.1
+  node: circleci/node@5.0.3
+
+executors:
+  publish-go:
+    docker:
+      - image: cimg/go:1.19.0
+
+jobs:
+  deploy-serverless:
+    executor: publish-go
+    parameters:
+      path:
+        type: string
+        default: .
+    steps:
+      - checkout
+      - aws-cli/setup:
+          aws-access-key-id: AWS_ACCESS_KEY_SERVERLESS
+          aws-secret-access-key: AWS_SECRET_KEY_SERVERLESS
+      - node/install:
+          node-version: "16.13"
+      - serverless/setup
+      - run:
+          name: deploy
+          command: |
+            cd infra
+            sls deploy --verbose
+  build-go:
+    executor: publish-go
+    parameters:
+      path:
+        type: string
+        default: .
+    steps:
+      - checkout
+      - node/install:
+          node-version: "16.13"
+      - run:
+          name: build
+          command: |
+            cd << parameters.path >>
+            make build
+
+workflows:
+  worker:
+    jobs:
+      - build-go:
+          name: build-link-consumer
+          path: src/api/link-consumer
+
+      - build-go:
+          name: build-save-images
+          path: src/api/save-images
+
+      - deploy-serverless:
+          requires:
+            - build-link-consumer
+            - build-save-images
+          filters:
+            branches:
+              only: main
