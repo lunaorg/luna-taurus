@@ -12,17 +12,18 @@ type Responses struct {
 	extraFields  map[string]interface{}
 }
 
-func NewResponses(ctx context.Context, functionName string) *Responses {
+func NewResponses(ctx context.Context, functionName string) (r *Responses) {
 	return &Responses{
 		functionName: functionName,
 	}
 }
 
 func (r *Responses) Success(extraFields map[string]interface{}) (events.APIGatewayProxyResponse, error) {
-	r.extraFields = extraFields
-
 	return events.APIGatewayProxyResponse{
-		Body:       fmt.Sprintf("%#v", r),
+		Body: fmt.Sprintf("%#v", Responses{
+			functionName: r.functionName,
+			extraFields:  extraFields,
+		}),
 		StatusCode: http.StatusOK,
 	}, nil
 }
