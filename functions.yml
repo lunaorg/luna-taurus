@@ -1,12 +1,12 @@
 link-consumer:
-  handler: src/api/link-consumer/bin/handler
+  handler: bin/link-consumer
   events:
     - http:
       path: /link-consumer
       method: GET
 
 save-images:
-  handler: src/api/save-images/bin/handler
+  handler: bin/save-images
   events:
     - http:
       path: /save-images

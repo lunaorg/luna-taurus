@@ -29,7 +29,6 @@ jobs:
       - run:
           name: deploy
           command: |
-            cd infra
             sls deploy --verbose
   build-go:
     executor: publish-go
@@ -44,24 +43,16 @@ jobs:
       - run:
           name: build
           command: |
-            cd << parameters.path >>
             make build
 
 workflows:
   worker:
     jobs:
-      - build-go:
-          name: build-link-consumer
-          path: src/api/link-consumer
-
-      - build-go:
-          name: build-save-images
-          path: src/api/save-images
+      - build-go
 
       - deploy-serverless:
           requires:
-            - build-link-consumer
-            - build-save-images
+            - build-go
           filters:
             branches:
               only: main

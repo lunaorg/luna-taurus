@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	"github.com/lunaorg/luna-taurus/src/libs/responses"
+	"github.com/lunaorg/luna-taurus/libs/responses"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
@@ -22,6 +22,5 @@ func Handler(ctx context.Context, event events.APIGatewayProxyRequest) (events.A
 	extraFields := map[string]interface{}{
 		"received-event": event,
 	}
-
 	return resp.Success(extraFields)
 }

@@ -1,7 +1,7 @@
 go 1.19
 
 use (
-	src/api/link-consumer
-	src/api/save-images
-	src/libs/responses
+	link-consumer
+	save-images
+	libs/responses
 )
