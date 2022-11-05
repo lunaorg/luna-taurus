@@ -29,30 +29,13 @@ jobs:
       - run:
           name: deploy
           command: |
-            sls deploy --verbose
-  build-go:
-    executor: publish-go
-    parameters:
-      path:
-        type: string
-        default: .
-    steps:
-      - checkout
-      - node/install:
-          node-version: "16.13"
-      - run:
-          name: build
-          command: |
             make build
+            sls deploy --verbose
 
 workflows:
   worker:
     jobs:
-      - build-go
-
       - deploy-serverless:
-          requires:
-            - build-go
           filters:
             branches:
               only: main
